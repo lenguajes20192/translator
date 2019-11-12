@@ -7,6 +7,186 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface SRListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link SRParser#sourceFile}.
+	 * @param ctx the parse tree
+	 */
+	void enterSourceFile(SRParser.SourceFileContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#sourceFile}.
+	 * @param ctx the parse tree
+	 */
+	void exitSourceFile(SRParser.SourceFileContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#resource}.
+	 * @param ctx the parse tree
+	 */
+	void enterResource(SRParser.ResourceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#resource}.
+	 * @param ctx the parse tree
+	 */
+	void exitResource(SRParser.ResourceContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#importDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterImportDecl(SRParser.ImportDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#importDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitImportDecl(SRParser.ImportDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#importSpec}.
+	 * @param ctx the parse tree
+	 */
+	void enterImportSpec(SRParser.ImportSpecContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#importSpec}.
+	 * @param ctx the parse tree
+	 */
+	void exitImportSpec(SRParser.ImportSpecContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#importPath}.
+	 * @param ctx the parse tree
+	 */
+	void enterImportPath(SRParser.ImportPathContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#importPath}.
+	 * @param ctx the parse tree
+	 */
+	void exitImportPath(SRParser.ImportPathContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#functionDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionDecl(SRParser.FunctionDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#functionDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionDecl(SRParser.FunctionDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#methodDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodDecl(SRParser.MethodDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#methodDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodDecl(SRParser.MethodDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#receiver}.
+	 * @param ctx the parse tree
+	 */
+	void enterReceiver(SRParser.ReceiverContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#receiver}.
+	 * @param ctx the parse tree
+	 */
+	void exitReceiver(SRParser.ReceiverContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(SRParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(SRParser.BlockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#statementList}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatementList(SRParser.StatementListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#statementList}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatementList(SRParser.StatementListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement(SRParser.StatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement(SRParser.StatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#simpleStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleStmt(SRParser.SimpleStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#simpleStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleStmt(SRParser.SimpleStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignment(SRParser.AssignmentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#assignment}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignment(SRParser.AssignmentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#expressionStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionStmt(SRParser.ExpressionStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#expressionStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionStmt(SRParser.ExpressionStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#returnStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterReturnStmt(SRParser.ReturnStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#returnStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitReturnStmt(SRParser.ReturnStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#ifStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfStmt(SRParser.IfStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#ifStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfStmt(SRParser.IfStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#faStmt}.
+	 * @param ctx the parse tree
+	 */
+	void enterFaStmt(SRParser.FaStmtContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#faStmt}.
+	 * @param ctx the parse tree
+	 */
+	void exitFaStmt(SRParser.FaStmtContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#faClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterFaClause(SRParser.FaClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#faClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitFaClause(SRParser.FaClauseContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SRParser#declaration}.
 	 * @param ctx the parse tree
 	 */
@@ -177,6 +357,66 @@ public interface SRListener extends ParseTreeListener {
 	 */
 	void exitBasicLit(SRParser.BasicLitContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link SRParser#functionLit}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionLit(SRParser.FunctionLitContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#functionLit}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionLit(SRParser.FunctionLitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#functionType}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionType(SRParser.FunctionTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#functionType}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionType(SRParser.FunctionTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#signature}.
+	 * @param ctx the parse tree
+	 */
+	void enterSignature(SRParser.SignatureContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#signature}.
+	 * @param ctx the parse tree
+	 */
+	void exitSignature(SRParser.SignatureContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#result}.
+	 * @param ctx the parse tree
+	 */
+	void enterResult(SRParser.ResultContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#result}.
+	 * @param ctx the parse tree
+	 */
+	void exitResult(SRParser.ResultContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#parameters}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameters(SRParser.ParametersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#parameters}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameters(SRParser.ParametersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#parameterDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameterDecl(SRParser.ParameterDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#parameterDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameterDecl(SRParser.ParameterDeclContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link SRParser#qualifiedIdent}.
 	 * @param ctx the parse tree
 	 */
@@ -306,4 +546,14 @@ public interface SRListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitValor(SRParser.ValorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link SRParser#eos}.
+	 * @param ctx the parse tree
+	 */
+	void enterEos(SRParser.EosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link SRParser#eos}.
+	 * @param ctx the parse tree
+	 */
+	void exitEos(SRParser.EosContext ctx);
 }

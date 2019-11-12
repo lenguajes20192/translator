@@ -10,6 +10,114 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface SRVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link SRParser#sourceFile}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSourceFile(SRParser.SourceFileContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#resource}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitResource(SRParser.ResourceContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#importDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImportDecl(SRParser.ImportDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#importSpec}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImportSpec(SRParser.ImportSpecContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#importPath}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitImportPath(SRParser.ImportPathContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#functionDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionDecl(SRParser.FunctionDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#methodDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMethodDecl(SRParser.MethodDeclContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#receiver}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReceiver(SRParser.ReceiverContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(SRParser.BlockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#statementList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementList(SRParser.StatementListContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#statement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatement(SRParser.StatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#simpleStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSimpleStmt(SRParser.SimpleStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#assignment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignment(SRParser.AssignmentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#expressionStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionStmt(SRParser.ExpressionStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#returnStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturnStmt(SRParser.ReturnStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#ifStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStmt(SRParser.IfStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#faStmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFaStmt(SRParser.FaStmtContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#faClause}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFaClause(SRParser.FaClauseContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SRParser#declaration}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -112,6 +220,42 @@ public interface SRVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBasicLit(SRParser.BasicLitContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link SRParser#functionLit}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionLit(SRParser.FunctionLitContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#functionType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionType(SRParser.FunctionTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#signature}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSignature(SRParser.SignatureContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#result}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitResult(SRParser.ResultContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#parameters}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameters(SRParser.ParametersContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#parameterDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameterDecl(SRParser.ParameterDeclContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link SRParser#qualifiedIdent}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -189,4 +333,10 @@ public interface SRVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitValor(SRParser.ValorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link SRParser#eos}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEos(SRParser.EosContext ctx);
 }

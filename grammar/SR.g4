@@ -1,12 +1,35 @@
 grammar SR;
 
+sourceFile          : ((resource | importDecl | declaration | statementList) eos)*;
+//sourceFile          : (importDecl eos)* resource+ ((functionDecl | methodDecl | declaration | statementList))*;
+resource            : RESOURCE IDENTIFIER ( parameters )? sourceFile END IDENTIFIER*;
+endResource         : ;
+importDecl          : IMPORT IDENTIFIER (COMA IDENTIFIER)*;
+functionDecl        : FUNC IDENTIFIER (signature block?);
+methodDecl          : FUNC receiver IDENTIFIER (signature block?);
+receiver            : parameters;
+block               : statementList?;
+statementList       : (statement eos)+;
+statement           : declaration
+                    | simpleStmt
+                    | returnStmt
+                    | ifStmt
+                    | faStmt;
+simpleStmt          : expressionStmt | assignment; //| emptyStmt;
+assignment          : expression OP_ASIG expression;
+expressionStmt      : expression;
+returnStmt          : RETURN expressionList?;
+//ifStmt              : IF expression (LOGICAL expression)* EJECUTA block (ELSE (ifStmt | EJECUTA block))? endif;
+ifStmt              : IF expression EJECUTA block (ELSE (ifStmt | EJECUTA block))* FI;
+faStmt              : FA faClause (COMA faClause)* EJECUTA block AF;
+faClause            : simpleStmt? TO expression?;
 declaration         : constDecl | varDecl;
 constDecl           : CONST IDENTIFIER ((DOS_PUNTOS type_ (OP_ASIG expression)?) | OP_ASIG expression); //just one identifier
-varDecl             : VAR varSpec;
+varDecl             : VAR varSpec ;
 varSpec             : identifierList (slice? DOS_PUNTOS type_ (OP_ASIG expression)? | OP_ASIG expression (COMA varSpec)*);
-type_               : typeName | typeLit | PAR_IZQ type_ PAR_DER;
+type_               : typeName | typeLit;
 typeName            : IDENTIFIER | qualifiedIdent;  //second not necessary
-typeLit             : arrayType | sliceType; //| functionType;
+typeLit             : arrayType | sliceType | functionType;
 arrayType           : LLAV_IZQ arrayLength LLAV_DER;
 arrayLength         : expression;
 sliceType           : LLAV_IZQ LLAV_DER type_;
@@ -26,9 +49,15 @@ primaryExpr         : operand
 //unaryExpr           : primaryExpr| (OP_SUMA | OP_MULT) expression;
 conversion          : type_ PAR_IZQ expression COMA? PAR_DER;
 operand             : literal | IDENTIFIER | methodExpr | PAR_IZQ expression PAR_DER;
-literal             : basicLit; // | compositeLit | functionLit;
+literal             : basicLit | functionLit; // | compositeLit ;
 basicLit            : NULL_LIT | NUM_INT | STRING_LIT | NUM_DOUBLE;
-//operandName         : IDENTIFIER | qualifiedIdent;
+functionLit         : FUNC signature block;
+functionType        : FUNC signature;
+signature           : parameters result | parameters;
+result              : parameters | type_;
+parameters          : PAR_IZQ (parameterDecl (COMA parameterDecl)* COMA?)? PAR_DER ;
+parameterDecl       : identifierList? ELLIPSIS? type_ ;
+//operandName        : IDENTIFIER | qualifiedIdent;
 qualifiedIdent      : IDENTIFIER PUNTO IDENTIFIER;
 methodExpr          : receiverType PUNTO IDENTIFIER ;
 receiverType        : typeName | PAR_IZQ ( typeName | receiverType) PAR_DER ;  // PAR_IZQ ('*' typeName
@@ -43,36 +72,42 @@ expr_suma           : expr_suma OP_SUMA expr_mult | expr_mult;
 expr_mult           : expr_mult OP_MULT termino | termino;
 termino             : valor | PAR_IZQ expr_rel PAR_DER | IDENTIFIER;
 valor               : NUM_INT | NUM_DOUBLE;
-
+eos
+    : ';'
+    | EOF
+    | {lineTerminatorAhead()}?
+    | {checkPreviousTokenText("}")}?
+    ;
 
 //lexer
 
 // Keywords
 
+RESOURCE            : 'resource';
 CONST               : 'const';
-BREAK               : 'break';
-DEFAULT             : 'default';
 FUNC                : 'func';
 CASE                : 'case';
-MAP                 : 'map';
 ELSE                : 'else';
-PACKAGE             : 'package';
 SWITCH              : 'switch';
 IF                  : 'if';
-RANGE               : 'range';
+FI                  : 'fi';
 TYPE                : 'type';
 CONTINUE            : 'continue';
 FA                  : 'fa';
+AF                  : 'af';
 IMPORT              : 'import';
 RETURN              : 'return';
 VAR                 : 'var';
+END                 : 'end';
+TO                  : 'to';
 
 NULL_LIT            : 'null';
 
 IDENTIFIER          : [a-zA-Z_][a-zA-Z0-9_]*;
 NUM_INT             : [0-9]+;
 NUM_DOUBLE          : [0-9]+ '.' [0-9]+;
-STRING_LIT      : '"' ~'"'* '"';
+STRING_LIT          : '"' ~'"'* '"';
+LOGICAL             : 'or' | 'and';
 
 // Punctuation
 
@@ -84,6 +119,7 @@ LLAV_DER            : ']';
 DOS_PUNTOS          : ':';
 COMA                : ',';
 ELLIPSIS            : '...';
+EJECUTA             : '->';
 OP_SUMA             : '+' | '-';
 OP_MULT             : '*' | '/' | '%';
 OP_ASIG             : ':=' | '+:=' | '-:=' | '*:=' | '/:=';

@@ -1,0 +1,17 @@
+resource factorial()
+    import a,b
+    const SCALE : real := real(SIZE-DOT)/real(NP-1)
+    if mid + 1 < hi ->
+        send job(mid+1)
+    else ->
+        mywork +:= hi - mid + 1
+    fi
+end factorial
+
+resource a
+    fa i := 1 to n ->
+        var slp: int := 0
+        cwins[i] := WinNewContext(mainwin)
+    af
+    var front := 0, rear := 0, count := 0
+end
