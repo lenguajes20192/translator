@@ -51,30 +51,6 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterImportSpec(SRParser.ImportSpecContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitImportSpec(SRParser.ImportSpecContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterImportPath(SRParser.ImportPathContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitImportPath(SRParser.ImportPathContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterFunctionDecl(SRParser.FunctionDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}

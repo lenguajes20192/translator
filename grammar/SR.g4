@@ -1,9 +1,7 @@
 grammar SR;
 
 sourceFile          : ((resource | importDecl | declaration | statementList) eos)*;
-//sourceFile          : (importDecl eos)* resource+ ((functionDecl | methodDecl | declaration | statementList))*;
 resource            : RESOURCE IDENTIFIER ( parameters )? sourceFile END IDENTIFIER*;
-endResource         : ;
 importDecl          : IMPORT IDENTIFIER (COMA IDENTIFIER)*;
 functionDecl        : FUNC IDENTIFIER (signature block?);
 methodDecl          : FUNC receiver IDENTIFIER (signature block?);
@@ -14,7 +12,11 @@ statement           : declaration
                     | simpleStmt
                     | returnStmt
                     | ifStmt
-                    | faStmt;
+                    | faStmt
+                    | writeStmt
+                    | readStmt
+                    | procedureStmt
+                    | opStmt;
 simpleStmt          : expressionStmt | assignment; //| emptyStmt;
 assignment          : expression OP_ASIG expression;
 expressionStmt      : expression;
@@ -23,12 +25,16 @@ returnStmt          : RETURN expressionList?;
 ifStmt              : IF expression EJECUTA block (ELSE (ifStmt | EJECUTA block))* FI;
 faStmt              : FA faClause (COMA faClause)* EJECUTA block AF;
 faClause            : simpleStmt? TO expression?;
+writeStmt           : WRITE arguments;
+readStmt            : READ arguments;
+procedureStmt       : PROCEDURE IDENTIFIER parameters (RETURN varSpec)*  statementList END IDENTIFIER*;
+opStmt              : OP (varSpec | (IDENTIFIER parameters)) (RETURN varSpec)*;
 declaration         : constDecl | varDecl;
 constDecl           : CONST IDENTIFIER ((DOS_PUNTOS type_ (OP_ASIG expression)?) | OP_ASIG expression); //just one identifier
 varDecl             : VAR varSpec ;
 varSpec             : identifierList (slice? DOS_PUNTOS type_ (OP_ASIG expression)? | OP_ASIG expression (COMA varSpec)*);
 type_               : typeName | typeLit;
-typeName            : IDENTIFIER | qualifiedIdent;  //second not necessary
+typeName            : IDENTIFIER | qualifiedIdent | IDENTIFIER arrayType;  //second not necessary
 typeLit             : arrayType | sliceType | functionType;
 arrayType           : LLAV_IZQ arrayLength LLAV_DER;
 arrayLength         : expression;
@@ -36,16 +42,17 @@ sliceType           : LLAV_IZQ LLAV_DER type_;
 identifierList      : IDENTIFIER (COMA IDENTIFIER)*;
 expression          : primaryExpr
                     | expr_rel
+                    //| exprOr
                     //| unaryExpr
-                    | expression (OP_MULT ) expression
+                    //| expression (OP_MULT ) expression
                     //| expression ('+' | '-' | '|' | '^') expression
-                    //| expression ('==' | '!=' | '<' | '<=' | '>' | '>=') expression
+                    //| expression ('=' | '!=' | '<' | '<=' | '>' | '>=') expression
                     //| expression '&&' expression
-                    //| expression '||' expression
+                    | expression ('or'|'|'|'and'|'&') expression
                     ;
 primaryExpr         : operand
                     | conversion
-                    | primaryExpr ( PUNTO IDENTIFIER | index | slice | typeAssertion );
+                    | primaryExpr ( PUNTO IDENTIFIER | index | slice | typeAssertion | arguments );
 //unaryExpr           : primaryExpr| (OP_SUMA | OP_MULT) expression;
 conversion          : type_ PAR_IZQ expression COMA? PAR_DER;
 operand             : literal | IDENTIFIER | methodExpr | PAR_IZQ expression PAR_DER;
@@ -53,10 +60,11 @@ literal             : basicLit | functionLit; // | compositeLit ;
 basicLit            : NULL_LIT | NUM_INT | STRING_LIT | NUM_DOUBLE;
 functionLit         : FUNC signature block;
 functionType        : FUNC signature;
+arguments           : PAR_IZQ ((expressionList | type_ (COMA expressionList)?) ELLIPSIS? COMA?)? PAR_DER;
 signature           : parameters result | parameters;
 result              : parameters | type_;
 parameters          : PAR_IZQ (parameterDecl (COMA parameterDecl)* COMA?)? PAR_DER ;
-parameterDecl       : identifierList? ELLIPSIS? type_ ;
+parameterDecl       : identifierList? DOS_PUNTOS? type_ ;
 //operandName        : IDENTIFIER | qualifiedIdent;
 qualifiedIdent      : IDENTIFIER PUNTO IDENTIFIER;
 methodExpr          : receiverType PUNTO IDENTIFIER ;
@@ -96,10 +104,14 @@ CONTINUE            : 'continue';
 FA                  : 'fa';
 AF                  : 'af';
 IMPORT              : 'import';
-RETURN              : 'return';
+RETURN              : 'return' | 'returns';
 VAR                 : 'var';
 END                 : 'end';
 TO                  : 'to';
+WRITE               : 'write' | 'writes';
+READ                : 'read';
+PROCEDURE           : 'procedure' | 'proc';
+OP                  : 'op';
 
 NULL_LIT            : 'null';
 
@@ -122,8 +134,9 @@ ELLIPSIS            : '...';
 EJECUTA             : '->';
 OP_SUMA             : '+' | '-';
 OP_MULT             : '*' | '/' | '%';
-OP_ASIG             : ':=' | '+:=' | '-:=' | '*:=' | '/:=';
+OP_ASIG             : ':=' | '+:=' | '-:=' | '*:=' | '/:=' | '=';
 OP_REL              : '<' | '>' | '<=' | '>=';
+OP_LOG              : 'and' | '&' | '|';
 WS                  : [ \t\r\n]+ -> skip;
 COMMENT             : '#' ~[\r\n]* -> skip;
 

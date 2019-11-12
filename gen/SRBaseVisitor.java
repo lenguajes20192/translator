@@ -37,20 +37,6 @@ public class SRBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements SRV
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitImportSpec(SRParser.ImportSpecContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitImportPath(SRParser.ImportPathContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitFunctionDecl(SRParser.FunctionDeclContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

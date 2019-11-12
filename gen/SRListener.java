@@ -37,26 +37,6 @@ public interface SRListener extends ParseTreeListener {
 	 */
 	void exitImportDecl(SRParser.ImportDeclContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link SRParser#importSpec}.
-	 * @param ctx the parse tree
-	 */
-	void enterImportSpec(SRParser.ImportSpecContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SRParser#importSpec}.
-	 * @param ctx the parse tree
-	 */
-	void exitImportSpec(SRParser.ImportSpecContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link SRParser#importPath}.
-	 * @param ctx the parse tree
-	 */
-	void enterImportPath(SRParser.ImportPathContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link SRParser#importPath}.
-	 * @param ctx the parse tree
-	 */
-	void exitImportPath(SRParser.ImportPathContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link SRParser#functionDecl}.
 	 * @param ctx the parse tree
 	 */

@@ -28,18 +28,6 @@ public interface SRVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitImportDecl(SRParser.ImportDeclContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link SRParser#importSpec}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitImportSpec(SRParser.ImportSpecContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link SRParser#importPath}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitImportPath(SRParser.ImportPathContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link SRParser#functionDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
