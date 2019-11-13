@@ -1,0 +1,21 @@
+resource b()
+    var z1 := 1234
+    var z2 : int
+    
+    proc p (i)
+        fa k := 1 to 4 ->
+            write("in p",i,k)
+        af
+        write(z1)
+    end
+    proc q()
+        z2 := 87654
+        write("in q")
+        z2 := z1+z2
+        write(z2)
+    end
+    z1 := 1234
+    z2 := 567
+end
+
+

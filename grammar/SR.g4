@@ -1,7 +1,8 @@
 grammar SR;
 
-sourceFile          : ((resource | importDecl | declaration | statementList) eos)*;
-resource            : RESOURCE IDENTIFIER ( parameters )? sourceFile END IDENTIFIER*;
+sourceFile          : ((resourceStmt | importDecl | declaration | statementList) eos)*;
+resourceStmt        : resource IDENTIFIER ( parameters )? sourceFile END IDENTIFIER*;
+resource            : RESOURCE;
 importDecl          : IMPORT IDENTIFIER (COMA IDENTIFIER)*;
 functionDecl        : FUNC IDENTIFIER (signature block?);
 methodDecl          : FUNC receiver IDENTIFIER (signature block?);
@@ -21,14 +22,18 @@ simpleStmt          : expressionStmt | assignment; //| emptyStmt;
 assignment          : expression OP_ASIG expression;
 expressionStmt      : expression;
 returnStmt          : RETURN expressionList?;
-//ifStmt              : IF expression (LOGICAL expression)* EJECUTA block (ELSE (ifStmt | EJECUTA block))? endif;
 ifStmt              : IF expression EJECUTA block (ELSE (ifStmt | EJECUTA block))* FI;
 faStmt              : FA faClause (COMA faClause)* EJECUTA block AF;
-faClause            : simpleStmt? TO expression?;
-writeStmt           : WRITE arguments;
-readStmt            : READ arguments;
-procedureStmt       : PROCEDURE IDENTIFIER parameters (RETURN varSpec)*  statementList END IDENTIFIER*;
-opStmt              : OP (varSpec | (IDENTIFIER parameters)) (RETURN varSpec)*;
+faClause            : simpleStmt? faClauseTo;
+faClauseTo          : TO expression?;
+writeStmt           : write arguments;
+write               : WRITE;
+readStmt            : read arguments;
+read                : READ;
+procedureStmt       : procedure IDENTIFIER parameters (RETURN varSpec)*  statementList END IDENTIFIER*;
+procedure           : PROCEDURE;
+opStmt              : op (varSpec | (IDENTIFIER parameters)) (RETURN varSpec)*;
+op                  : OP;
 declaration         : constDecl | varDecl;
 constDecl           : CONST IDENTIFIER ((DOS_PUNTOS type_ (OP_ASIG expression)?) | OP_ASIG expression); //just one identifier
 varDecl             : VAR varSpec ;
@@ -78,13 +83,13 @@ expr_rel            : expr_rel OP_REL expr_asig | expr_asig;
 expr_asig           : expr_asig OP_ASIG expr_suma | expr_suma;
 expr_suma           : expr_suma OP_SUMA expr_mult | expr_mult;
 expr_mult           : expr_mult OP_MULT termino | termino;
-termino             : valor | PAR_IZQ expr_rel PAR_DER | IDENTIFIER;
-valor               : NUM_INT | NUM_DOUBLE;
+termino             : valor | PAR_IZQ expr_rel PAR_DER;
+valor               : IDENTIFIER | NUM_INT | NUM_DOUBLE;
 eos
     : ';'
     | EOF
     | {lineTerminatorAhead()}?
-    | {checkPreviousTokenText("}")}?
+    | {checkPreviousTokenText("")}?
     ;
 
 //lexer

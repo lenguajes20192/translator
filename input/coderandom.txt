@@ -1,0 +1,114 @@
+resource b()
+    var z1 := 1234
+    var z2 : int
+    
+    process p (i := 1 to 2)
+        fa k := 1 to 4 !
+            write("in p",i,k)
+        af
+        write(z1)
+    end
+    process q
+        z2 := 87654
+        write("in q")
+        z2 := z1+z2
+        write(z2)
+    end
+    z1 := 1234
+    z2 := 567
+end
+
+resource b()
+    var z1 := 1234
+    var z2 : int
+    
+    proc p (i)
+        fa k := 1 to 4 ->
+            write("in p",i,k)
+        af
+        write(z1)
+    end
+    proc q()
+        z2 := 87654
+        write("in q")
+        z2 := z1+z2
+        write(z2)
+    end
+    z1 := 1234
+    z2 := 567
+end
+
+const R := (p-1)*S + 1
+const OFF := 40
+const DOT2 : int := DOT/2
+const SCALE : real := real(SIZE-DOT)/real(NP-1)
+const MSG_READY := "Press ’SPACE’ to go"
+const MSG_RUNNING := "Running: ’+’/’-’ to adjust speed"
+const MSG_DONE := "Done, ’r’ to regenerate numbers"
+
+var store[0:size-1] : int
+//var front := 0, rear := 0, count := 0
+var haveL, dirtyL, haveR, dirtyR : bool
+var n, t : int
+var slp: int := 0
+var started := false
+
+fa i := 1 to n ->
+    var slp: int := 0
+af
+
+if not started ->
+    regenerate()
+    banner(textw, MSG_READY)
+else ->
+    WinBell(mainwin, 0)
+fi
+
+if mid + 1 < hi ->
+send job(mid+1, hi)
+ else ->
+mywork +:= hi - mid + 1
+fi
+
+
+
+fa i := 1 to n ->
+    var slp: int := 0
+    cwins[i] := WinNewContext(mainwin)
+af
+if mid + 1 < hi ->
+    send job(mid+1)
+else ->
+    mywork +:= hi - mid + 1
+fi
+
+
+
+resource factorial()
+    import a,b
+    const SCALE : real := real(SIZE-DOT)/real(NP-1)
+    if mid + 1 < hi ->
+        write(mid+1)
+    else ->
+        mywork := hi - mid + 1
+    fi
+end factorial
+
+resource a
+    
+    fa i := 1 to n ->
+        var slp: int := 0
+        cwins[i] := WinNewContext(mainwin)
+    af
+    var front := 0, rear := 0, count := 0
+end
+
+
+fa i := 1 to n ->
+    var slp: int
+af
+
+----------------------
+SR                      Go 
+var a:=0,b:=1           var a,b= 0,1
+package/func iden            resource iden

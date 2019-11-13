@@ -1,0 +1,94 @@
+resource qsort()
+	const JS := 4 # number of job servers
+	import SRWin
+	op banner(win: winWindow, str: string)
+	op regenerate()
+	op drawDot(win: winWindow, idx, value, slp: int)
+	op part(ids, left, right: int, x, y, w, h: int) returns mid:int
+	op job(left, right: int)
+	op done(int)
+	var SIZE := 500; getarg(1, SIZE)
+	var NP := SIZE/2; getarg(2, NP)
+	var DOT := 6; getarg(3, DOT)
+	if (SIZE < 100) or (NP < 10) ->
+		write("Invalid Value, sorry...")
+		stop(1)
+	fi
+	const OFF := 40
+	const DOT2 : int := DOT/2
+	const SCALE : real := real(SIZE-DOT)/real(NP-1)
+	const MSG_READY := "Press ’SPACE’ to go"
+	const MSG_RUNNING := "Running: ’+’/’-’ to adjust speed"
+	const MSG_DONE := "Done, ’r’ to regenerate numbers"
+	var numbers[:NP] : int
+	var mainwin, ww, boxw, textw: winWindow
+	var cwins[1:JS] :winWindow
+	var colors[1:JS] : string[6]
+	colors[1] := "red"
+	colors[2] := "yellow"
+	colors[3] := "green"
+	colors[4] := "cyan"
+	op ec : winEventChannel
+	var ev: winEvent
+	var slp: int := 0
+	var started := false
+	
+	## Draw a string at the bottom
+	proc banner(win, str)
+		WinClearArea(mainwin, winRectangle(0, SIZE+DOT, SIZE, OFF-DOT))
+		WinDrawString(win, winPoint(OFF, SIZE+30), str)
+	end
+	
+	## Generate random numbers
+	proc regenerate()
+		WinClearArea(mainwin, winRectangle(0, 0, SIZE, SIZE+DOT))
+		var pressed : bool := false
+		do true ->
+			var ev: winEvent
+			receive evchan(ev)
+			if ev.event_type = Ev_ButtonDown ->
+				pressed := true
+				WinSetBorder(mywin, but.border, borderColor)
+				WinEraseArea(revw, winRectangle(0, 0, w, h))
+				WinDrawString(revw, winPoint(labx, laby), labelString)
+				ev.event_type = Ev_ButtonUp ->
+				WinSetBorder(mywin, but.border, borderColor)
+				WinEraseArea(normalw, winRectangle(0, 0, w, h))
+				WinDrawString(normalw, winPoint(labx, laby), labelString)
+				if pressed ->
+					cb(but, labelString)
+				fi
+				pressed := false
+			    ev.event_type = Ev_EnterWindow ->
+				WinSetBorder(mywin, but.border, borderColor)
+			    ev.event_type = Ev_ExitWindow ->
+				pressed := false
+				WinSetBorder(normalw, but.border, buttonColor)
+				WinEraseArea(normalw, winRectangle(0, 0, w, h))
+				WinDrawString(normalw, winPoint(labx, laby), labelString)
+			fi
+			WinFlush(mywin)
+		od
+	end
+end Button ### global
+
+resource ButtonTest()
+	import SRWin, Button
+	op cb1, cb2: buttonCallBack
+	proc cb1(b, str)
+		write("Hello")
+	end
+	proc cb2(b, str)
+		write("Quit"); stop(0)
+	end
+	var mywin: winWindow := WinOpen("", "Button Test", null, UseDefault, 130, 80)
+	WinFlush(mywin)
+	send button(buttonRec(mywin, 10, 10, 50, 40, 2),
+	"red", "white", "blue", "Hello", cb1)
+	send button(buttonRec(mywin, 70, 10, 50, 40, 2),
+	"green", "blue", "white", "Quit", cb2)
+
+	final
+		WinClose(mywin)
+	end
+end ButtonTest

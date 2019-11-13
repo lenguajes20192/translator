@@ -15,13 +15,43 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSourceFile(SRParser.SourceFileContext ctx) { }
+	int c=1;
+	@Override public void enterSourceFile(SRParser.SourceFileContext ctx) {
+		if(c == 1) {
+			System.out.println("---------------------------------\n");
+			System.out.println("package main");
+			System.out.println("");
+			System.out.println("import \"fmt\"");
+			System.out.println("");
+			c++;
+		}
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSourceFile(SRParser.SourceFileContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterResourceStmt(SRParser.ResourceStmtContext ctx) {
+		String params = "()";
+		if (ctx.parameters() != null){
+			params = ctx.parameters().getText();
+		}
+		System.out.println("func " + ctx.IDENTIFIER().get(0)+ params + "{");
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitResourceStmt(SRParser.ResourceStmtContext ctx) {
+		System.out.println("}");
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -39,7 +69,10 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterImportDecl(SRParser.ImportDeclContext ctx) { }
+	@Override public void enterImportDecl(SRParser.ImportDeclContext ctx) {
+		String ids = ctx.IDENTIFIER().toString();
+		System.out.println("import "+ "("+ids.substring(1,ids.length()-1)+")");
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -99,7 +132,9 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterStatementList(SRParser.StatementListContext ctx) { }
+	@Override public void enterStatementList(SRParser.StatementListContext ctx) {
+
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -171,37 +206,180 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIfStmt(SRParser.IfStmtContext ctx) { }
+	@Override public void enterIfStmt(SRParser.IfStmtContext ctx) {
+		System.out.println("if "+ ctx.expression().getText() + " {");
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIfStmt(SRParser.IfStmtContext ctx) { }
+	@Override public void exitIfStmt(SRParser.IfStmtContext ctx) {
+		System.out.println("}");
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFaStmt(SRParser.FaStmtContext ctx) { }
+	@Override public void enterFaStmt(SRParser.FaStmtContext ctx) {
+		System.out.print("for ");
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFaStmt(SRParser.FaStmtContext ctx) { }
+	@Override public void exitFaStmt(SRParser.FaStmtContext ctx) {
+		System.out.println("}");
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFaClause(SRParser.FaClauseContext ctx) { }
+	String faId = null;
+	@Override public void enterFaClause(SRParser.FaClauseContext ctx) {
+		//faId = ctx.simpleStmt().expressionStmt().expression().expr_rel().expr_asig().expr_asig().expr_suma().expr_mult().termino().valor().IDENTIFIER().getText();
+		faId = ctx.simpleStmt().getText().substring(0, 1);
+		System.out.print(ctx.simpleStmt().getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFaClause(SRParser.FaClauseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFaClauseTo(SRParser.FaClauseToContext ctx) {
+		String faSecond  = ctx.expression().getText();
+		System.out.print("; " + faId + " <= " + faSecond + "; " + faId+"++");
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFaClauseTo(SRParser.FaClauseToContext ctx) {
+		System.out.println(" {");
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWriteStmt(SRParser.WriteStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWriteStmt(SRParser.WriteStmtContext ctx) {
+		System.out.println(ctx.arguments().getText());
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWrite(SRParser.WriteContext ctx) {
+		System.out.print("fmt.Println");
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWrite(SRParser.WriteContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterReadStmt(SRParser.ReadStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitReadStmt(SRParser.ReadStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRead(SRParser.ReadContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRead(SRParser.ReadContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterProcedureStmt(SRParser.ProcedureStmtContext ctx) {
+		String params = "()";
+		if (ctx.parameters() != null){
+			params = ctx.parameters().getText();
+		}
+		System.out.println("func " + ctx.IDENTIFIER().get(0)+ params + "{");
+		/*String expre = "";
+		for (int i=0; i< ctx.statementList().statement().size();i++){
+			expre = ctx.statementList().statement().get(i).simpleStmt().expressionStmt().expression().expr_rel().expr_asig().toString();
+		}
+		System.out.println(expre);*/
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitProcedureStmt(SRParser.ProcedureStmtContext ctx) {
+		System.out.println("}");
+	}
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterProcedure(SRParser.ProcedureContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitProcedure(SRParser.ProcedureContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOpStmt(SRParser.OpStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOpStmt(SRParser.OpStmtContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterOp(SRParser.OpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitOp(SRParser.OpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -219,7 +397,17 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterConstDecl(SRParser.ConstDeclContext ctx) { }
+	@Override public void enterConstDecl(SRParser.ConstDeclContext ctx) {
+		String type = "";
+		if (ctx.type_() != null){
+			type = ctx.type_().getText();
+		}
+		String expre = "";
+		if (ctx.expression() != null){
+			expre = "= " + ctx.expression().getText();
+		}
+		System.out.println(ctx.CONST()+" "+ ctx.IDENTIFIER()+" "+type+" "+ expre);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -231,7 +419,18 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarDecl(SRParser.VarDeclContext ctx) { }
+	@Override public void enterVarDecl(SRParser.VarDeclContext ctx) {
+		String type = "";
+		if (ctx.varSpec().type_() != null){
+			type = ctx.varSpec().type_().getText();
+		}
+		String expre = "";
+		if (ctx.varSpec().expression() != null){
+			expre = "= " + ctx.varSpec().expression().getText();
+		}
+		String ids = ctx.varSpec().identifierList().IDENTIFIER().toString();
+		System.out.println(ctx.VAR()+" "+ ids.substring(1,ids.length()-1)+" "+type+" "+ expre);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -435,6 +634,18 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterArguments(SRParser.ArgumentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitArguments(SRParser.ArgumentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSignature(SRParser.SignatureContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -567,7 +778,9 @@ public class SRBaseListener implements SRListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpr_rel(SRParser.Expr_relContext ctx) { }
+	@Override public void enterExpr_rel(SRParser.Expr_relContext ctx) {
+		//System.out.println(ctx.expr_asig().getText());
+	}
 	/**
 	 * {@inheritDoc}
 	 *

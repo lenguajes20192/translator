@@ -15,8 +15,10 @@ public class Main {
             CommonTokenStream tokens = new CommonTokenStream(lexer);
             // Crear el objeto correspondiente al analizador sintáctico que se alimenta a partir del buffer de tokens
             SRParser parser = new SRParser(tokens);
-            ParseTree tree = parser.expr_rel(); // Iniciar el analisis sintáctico en la regla inicial: r
+            ParseTree tree = parser.sourceFile(); // Iniciar el analisis sintáctico en la regla inicial: sourceFile
             System.out.println(tree.toStringTree(parser)); // imprime el arbol al estilo LISP
+            ParseTreeWalker walker = new ParseTreeWalker();
+            walker.walk(new SRBaseListener(), tree);
         } catch (Exception e){
             System.err.println("Error (Test): " + e);
         }
